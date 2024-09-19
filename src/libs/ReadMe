@@ -1,0 +1,3 @@
+This 'libs' folder contains files such as typescript files, db connections details
+or any third party library files modified so that they can be easily used in ChattyMice.
+Ex: Typescript classes, interfaces , db strings , etc. 
