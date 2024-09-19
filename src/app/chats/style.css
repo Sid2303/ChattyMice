@@ -1,0 +1,21 @@
+.trianle-div{
+    clip-path: polygon(100% 50%, 0 0, 0 99%);
+    height: 100%;
+    width: 5rem;
+    background-color: aqua;
+}
+
+.profiles{
+    height: 88%;
+    width: 54%;
+    background-color: blue;
+
+}
+
+.icons{
+    height: 12%;
+}
+
+.chatter-info{
+    height: 12%;
+}
