@@ -1,13 +1,20 @@
 .trianle-div{
-    clip-path: polygon(100% 50%, 0 0, 0 99%);
-    height: 100%;
-    width: 5rem;
-    background-color: aqua;
+    clip-path: polygon(100% 51%, 0 32%, 0 67%);
+    height: 35%;
+    width: 4rem;
+    background-color: rgb(156 163 175);
+    /* background-color: blueviolet; */
+    left: 6.2rem;
+}
+
+.contacts{
+    width: 7%;
 }
 
 .profiles{
     height: 88%;
-    width: 54%;
+    width: 100%;
+    z-index: 2;
     background-color: blue;
 
 }
@@ -16,6 +23,17 @@
     height: 12%;
 }
 
+.chat-section{
+    width: 100%;
+}
+
 .chatter-info{
     height: 12%;
+    width: 100%;
+}
+
+.enter-text{
+    height: 12%;
+    width: 100%;
+    right: 5rem;
 }
