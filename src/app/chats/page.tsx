@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import './style.css'
+import selectEmoji from "../../resources/selectEmoji.svg";
 
 const page = () => {
     const profiles: {
@@ -28,6 +29,12 @@ const page = () => {
     ];
 
     const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
+    const [currentMessage,setCurrentMessage] = useState<string | number >("");
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCurrentMessage(e.target.value);
+        console.log(currentMessage);
+    };
 
     return (
         <div className='flex min-h-lvh'>
@@ -38,7 +45,7 @@ const page = () => {
                 </div>
                 <div className='profiles'>
                     {profiles.map((profile,index)=>(
-                        <div className="profile flex flex-col bg-black text-white mb-2" onClick={() => setSelectedProfile(profiles[index])}>
+                        <div key={index} className="profile flex flex-col bg-black text-white mb-2" onClick={() => setSelectedProfile(profiles[index])}>
                             <p>{profile.userName}</p>
                             <p>{profile.phone}</p>
                         </div>
@@ -54,14 +61,35 @@ const page = () => {
                     
                 </div>
                 <div className="chat-section relative flex flex-col justify-end h-full min-h-[500px]">
-                    <div className='userChat absolute bottom-0 right-0 bg-blue-500 p-2 m-4 rounded-lg'>
-                        <p>I am user</p>
-                    </div>
-                    <div className='profileChat absolute bottom-0 left-0 bg-gray-300 p-2 m-4 rounded-lg'>
-                        <p>I am Profile</p>
+                    <div className="chat-messages flex flex-col w-full p-4 gap-2">
+                        {selectedProfile.chat.map((chat, index) => (
+                            <div 
+                                key={index} 
+                                className={chat.sender === 'user' 
+                                    ? 'userChat bg-blue-500 text-white p-2 rounded-lg self-end w-[6rem]'
+                                    : 'profileChat bg-gray-300 p-2 rounded-lg self-start w-[6rem]'}
+                            >
+                                <p>{chat.message}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
-                <div className="enter-text flex bg-red-500">Enter</div>
+
+
+                <div className="enter-text flex bg-red-500 items-center justify-center">
+                    <div className='emoji-selection'></div>
+                    <div className='input-message ml-3'>
+                        <div className="input-message w-full">
+                            <input 
+                                className="w-full h-full pl-3" 
+                                type="text" 
+                                placeholder="Enter Message: "
+                                value={currentMessage} // Set the input value to the state
+                                onChange={handleInputChange} // Update state on input change
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )
