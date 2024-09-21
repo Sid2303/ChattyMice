@@ -1,12 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 import { connectionString } from "@/libs/db";
 import { User } from "@/libs/models/userModel";
 import mongoose from "mongoose";
 
 export async function GET() {
-  
-  const db = await mongoose.connect(connectionString);
+  await mongoose.connect(connectionString); 
   const data = await User.find();
   console.log(data);
   return NextResponse.json({ resutlt: data });
