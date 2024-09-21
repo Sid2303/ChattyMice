@@ -16,8 +16,12 @@
     width: 100%;
     z-index: 2;
     background-color: blue;
-
 }
+
+.profile{
+    cursor: pointer;
+}
+
 
 .icons{
     height: 12%;
@@ -28,7 +32,7 @@
 }
 
 .chatter-info{
-    height: 12%;
+    height: 14%;
     width: 100%;
 }
 
