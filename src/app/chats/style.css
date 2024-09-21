@@ -1,3 +1,8 @@
+*:focus{
+    border: none;
+    outline: none;
+}
+
 .trianle-div{
     clip-path: polygon(100% 51%, 0 32%, 0 67%);
     height: 35%;
@@ -41,3 +46,19 @@
     width: 100%;
     right: 5rem;
 }
+
+.input-message{
+    width: 80%;
+    height: 80%;
+}
+
+.emoji-selection {
+    background-image: url('../../resources/selectEmoji.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain; /* Or cover depending on how you want the image to fit */
+    width: 50px; /* Adjust based on your design */
+    height: 50px; /* Adjust based on your design */
+    cursor: pointer;
+}
+
