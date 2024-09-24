@@ -62,16 +62,28 @@ const page = () => {
                 </div>
                 <div className="chat-section relative flex flex-col justify-end h-full min-h-[500px]">
                     <div className="chat-messages flex flex-col w-full p-4 gap-2">
-                        {selectedProfile.chat.map((chat, index) => (
-                            <div 
-                                key={index} 
-                                className={chat.sender === 'user' 
-                                    ? 'userChat bg-blue-500 text-white p-2 rounded-lg self-end w-[6rem]'
-                                    : 'profileChat bg-gray-300 p-2 rounded-lg self-start w-[6rem]'}
-                            >
-                                <p>{chat.message}</p>
-                            </div>
-                        ))}
+                        <div className='chat-div'>
+                            {selectedProfile.chat.map((chat, index) => (
+                                <div
+                                    key={index}
+                                    className={
+                                        chat.sender === 'user'
+                                        ? 'inner-chat-user'
+                                        : 'inner-chat-profile'
+                                    }
+                                    >
+                                    <div
+                                        className={
+                                        chat.sender === 'user'
+                                            ? 'user-chat '
+                                            : 'profile-chat'
+                                        }
+                                    >
+                                        <p>{chat.message}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
