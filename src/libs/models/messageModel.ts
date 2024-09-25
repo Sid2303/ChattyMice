@@ -3,7 +3,7 @@ import mongoose, { Schema, Types } from 'mongoose';
 export interface Message {
   _id: Types.ObjectId;
   senderId: unknown;
-  recipientId: unknown;
+  conversationId: unknown;
   text: string;
   createdAt: Date;
   updatedAt: Date;
@@ -15,7 +15,7 @@ const messageSchema = new Schema<Message>({
     ref: 'User',
     required: true
   },
-  recipientId: {
+  conversationId: {
     type: Types.ObjectId,
     ref: 'User',
     required: true

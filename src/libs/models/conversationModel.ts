@@ -4,7 +4,8 @@ export interface Conversation {
   _id: Types.ObjectId;
   category: "direct" | "group";
   participants: Types.ObjectId[];
-  messages: Types.ObjectId[];
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 const conversationModel = new Schema<Conversation>({
@@ -17,12 +18,16 @@ const conversationModel = new Schema<Conversation>({
     type: [Types.ObjectId],
     required: true,
   },
-  messages: {
-    type: [Types.ObjectId],
-    default: [],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
   },
 });
-
 export const Conversation =
-  mongoose.models.coversation ||
+  mongoose.models.conversation ||
+  mongoose.models.conversations ||
   mongoose.model("conversation", conversationModel);
