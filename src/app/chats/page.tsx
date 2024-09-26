@@ -28,8 +28,18 @@ const page = () => {
         }
     ];
 
+    function sendMessage(event: React.MouseEvent<HTMLButtonElement>) {
+        selectedProfile.chat.push(
+            {
+                sender: 'user',
+                message: currentMessage
+            }
+        );
+        setCurrentMessage("");
+    }
+
     const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
-    const [currentMessage,setCurrentMessage] = useState<string | number >("");
+    const [currentMessage,setCurrentMessage] = useState<string >("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentMessage(e.target.value);
@@ -62,24 +72,36 @@ const page = () => {
                 </div>
                 <div className="chat-section relative flex flex-col justify-end h-full min-h-[500px]">
                     <div className="chat-messages flex flex-col w-full p-4 gap-2">
-                        {selectedProfile.chat.map((chat, index) => (
-                            <div 
-                                key={index} 
-                                className={chat.sender === 'user' 
-                                    ? 'userChat bg-blue-500 text-white p-2 rounded-lg self-end w-[6rem]'
-                                    : 'profileChat bg-gray-300 p-2 rounded-lg self-start w-[6rem]'}
-                            >
-                                <p>{chat.message}</p>
-                            </div>
-                        ))}
+                        <div className='chat-div'>
+                            {selectedProfile.chat.map((chat, index) => (
+                                <div
+                                    key={index}
+                                    className={
+                                        chat.sender === 'user'
+                                        ? 'inner-chat-user'
+                                        : 'inner-chat-profile'
+                                    }
+                                    >
+                                    <div
+                                        className={
+                                        chat.sender === 'user'
+                                            ? 'user-chat '
+                                            : 'profile-chat'
+                                        }
+                                    >
+                                        <p>{chat.message}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
 
-                <div className="enter-text flex bg-red-500 items-center justify-center">
+                <div className="enter-text flex items-center justify-center">
                     <div className='emoji-selection'></div>
                     <div className='input-message ml-3'>
-                        <div className="input-message w-full">
+                        <div className="input-message flex">
                             <input 
                                 className="w-full h-full pl-3" 
                                 type="text" 
@@ -88,6 +110,7 @@ const page = () => {
                                 onChange={handleInputChange} // Update state on input change
                             />
                         </div>
+                        <button className='send-message-button' onClick={sendMessage}>Send</button>
                     </div>
                 </div>
             </div>
