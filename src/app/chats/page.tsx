@@ -28,8 +28,18 @@ const page = () => {
         }
     ];
 
+    function sendMessage(event: React.MouseEvent<HTMLButtonElement>) {
+        selectedProfile.chat.push(
+            {
+                sender: 'user',
+                message: currentMessage
+            }
+        );
+        setCurrentMessage("");
+    }
+
     const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
-    const [currentMessage,setCurrentMessage] = useState<string | number >("");
+    const [currentMessage,setCurrentMessage] = useState<string >("");
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentMessage(e.target.value);
@@ -88,10 +98,10 @@ const page = () => {
                 </div>
 
 
-                <div className="enter-text flex bg-red-500 items-center justify-center">
+                <div className="enter-text flex items-center justify-center">
                     <div className='emoji-selection'></div>
                     <div className='input-message ml-3'>
-                        <div className="input-message w-full">
+                        <div className="input-message flex">
                             <input 
                                 className="w-full h-full pl-3" 
                                 type="text" 
@@ -100,6 +110,7 @@ const page = () => {
                                 onChange={handleInputChange} // Update state on input change
                             />
                         </div>
+                        <button className='send-message-button' onClick={sendMessage}>Send</button>
                     </div>
                 </div>
             </div>
