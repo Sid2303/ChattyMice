@@ -13,7 +13,7 @@ const userModel = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    select: false, // Hide password field from queries by default
+    select:true
   },
   createdAt: {
     type: Date,
@@ -24,4 +24,8 @@ const userModel = new mongoose.Schema({
     default: Date.now,
   },
 });
-export const User = mongoose.models.users || mongoose.model("users", userModel);
+export const User =
+  mongoose.models.users ||
+  mongoose.models.user ||
+  mongoose.model("users", userModel);
+

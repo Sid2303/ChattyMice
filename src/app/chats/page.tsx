@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import './style.css'
-import selectEmoji from "../../resources/selectEmoji.svg";
+import selectEmoji from "@/resources/selectEmoji.svg";
 
 const page = () => {
     const profiles: {
