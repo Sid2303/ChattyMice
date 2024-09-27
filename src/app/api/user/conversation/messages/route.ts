@@ -1,17 +1,16 @@
-import { connectionString } from "@/libs/db";
+import { connectToDatabase } from "@/libs/db";
 import { Message } from "@/libs/models/messageModel";
-import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  await mongoose.connect(connectionString);
+  await connectToDatabase();
   const data = await Message.find();
   console.log(req);
   return NextResponse.json({ from: "Messages", result: data });
 }
 
 export async function POST(req: NextRequest) {
-  await mongoose.connect(connectionString);
+  await connectToDatabase();
   const { senderId, conversationId, text } = await req.json();
 
   if (senderId || conversationId || text) {
