@@ -1,0 +1,16 @@
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35rem;
+    width: 25rem;
+}
+
+input{
+    border: 2px solid black;
+}
+
+input::focus{
+    outline: none;
+}

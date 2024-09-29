@@ -1,17 +1,24 @@
+"use client"
+
 import LoginForm from "@/components/LoginForm";
 import RegisterForm from "@/components/RegisterFrom";
+import { useState } from "react";
 
 export default function Home() {
+  const [currentPage, setCurrentPage] = useState("loginPage");
+
   return (
-    <div>
-      <h1>Home Page</h1>
+    <div className="flex flex-col justify-center items-center h-screen">
+
+    {currentPage === "loginPage" ? (
       <div>
-        {" "}
-        <LoginForm />
+        <LoginForm changePage={() => setCurrentPage("registerPage")}/>
       </div>
+    ) : (
       <div>
-        <RegisterForm />
+        <RegisterForm changePage={() => setCurrentPage("loginPage")} />
       </div>
-    </div>
+    )}
+  </div>
   );
 }
