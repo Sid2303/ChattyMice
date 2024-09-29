@@ -3,6 +3,9 @@
 import React, { useState } from 'react'
 import './style.css'
 import selectEmoji from "@/resources/selectEmoji.svg";
+import Sidebar from '@/components/Sidebar/sidebat';
+import Profile from '@/components/Profile/profile';
+import Chat from '@/components/Chat/chat';
 
 const page = () => {
     const profiles: {
@@ -48,55 +51,10 @@ const page = () => {
 
     return (
         <div className='flex min-h-lvh'>
-            <div className="contacts flex flex-col justify-start min-h-lvh">
-                <div className='icons flex justify-center items-center gap-4'>
-                    <div className='flex justify-center items-center h-full w-full'>Icon 1</div>
-                    <div className='trianle-div flex justify-center items-center absolute'>Icon 2</div>
-                </div>
-                <div className='profiles'>
-                    {profiles.map((profile,index)=>(
-                        <div key={index} className="profile flex flex-col text-white mb-2" onClick={() => setSelectedProfile(profiles[index])}>
-                            <p className='contact-icon'>{Array.from(profile.userName)[0]}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <Sidebar profiles={profiles} setSelectedProfile={setSelectedProfile}/>
             <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
-                <div className="chatter-info bg-purple-600 flex w-full justify-center items-center p-4">
-                    <div className='felx flex-col'>
-                        <h1 className="text-white">{selectedProfile.userName}</h1>
-                        <p className="text-white">{selectedProfile.phone}</p>
-                    </div>
-                    
-                </div>
-                <div className="chat-section relative flex flex-col justify-end h-full min-h-[500px]">
-                    <div className="chat-messages flex flex-col w-full p-4 gap-2">
-                        <div className='chat-div'>
-                            {selectedProfile.chat.map((chat, index) => (
-                                <div
-                                    key={index}
-                                    className={
-                                        chat.sender === 'user'
-                                        ? 'inner-chat-user'
-                                        : 'inner-chat-profile'
-                                    }
-                                    >
-                                    <div
-                                        className={
-                                        chat.sender === 'user'
-                                            ? 'user-chat '
-                                            : 'profile-chat'
-                                        }
-                                    >
-                                        <p>{chat.message}</p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-
-
+                <Profile userName={selectedProfile.userName} phone={selectedProfile.phone} />
+                <Chat profile={selectedProfile} />
                 <div className="enter-text flex items-center justify-center">
                     <div className='emoji-selection'></div>
                     <div className='input-message ml-3'>
@@ -109,7 +67,6 @@ const page = () => {
                                 onChange={handleInputChange} // Update state on input change
                             />
                         </div>
-                        {/* <button className='send-message-button' onClick={sendMessage}>Send</button> */}
                         <div className='send-button-div'>
                             <button className="btn-2">
                                 <div className="svg-wrapper-1">

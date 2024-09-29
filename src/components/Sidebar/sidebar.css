@@ -1,0 +1,48 @@
+*:focus{
+    border: none;
+    outline: none;
+}
+
+.trianle-div{
+    clip-path: polygon(100% 51%, 0 32%, 0 67%);
+    height: 35%;
+    width: 6rem;
+    background-color: #7A67B6;
+    left: 6.3rem;
+}
+
+.contacts{
+    width: 7%;
+    background-color: #7A67B6;
+}
+
+.profiles{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    height: 88%;
+    width: 100%;
+    z-index: 2;
+    background-color: #7A67B6;
+    margin-top: .5rem;
+}
+
+.profile{
+    cursor: pointer;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    aspect-ratio: 1 / 1;
+    background-color: #C9BCF2;
+    border-radius: 50%;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.icons{
+    height: 12%;
+}
