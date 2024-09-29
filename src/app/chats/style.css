@@ -6,26 +6,40 @@
 .trianle-div{
     clip-path: polygon(100% 51%, 0 32%, 0 67%);
     height: 35%;
-    width: 4rem;
-    background-color: rgb(156 163 175);
-    /* background-color: blueviolet; */
-    left: 6.2rem;
+    width: 6rem;
+    background-color: #7A67B6;
+    left: 6.3rem;
 }
 
 .contacts{
     width: 7%;
-    
+    background-color: #7A67B6;
 }
 
 .profiles{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     height: 88%;
     width: 100%;
     z-index: 2;
     background-color: #7A67B6;
+    margin-top: .5rem;
 }
 
 .profile{
     cursor: pointer;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    aspect-ratio: 1 / 1;
+    background-color: #C9BCF2;
+    border-radius: 50%;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -41,6 +55,7 @@
 .chatter-info{
     height: 14%;
     width: 100%;
+    background-color: #533AA5;
 }
 
 .enter-text{
@@ -82,7 +97,6 @@
 .chat-div{
     display: block;
     width: 100%;
-    
 }
 
 .inner-chat-profile{
@@ -101,7 +115,7 @@
     width: fit-content; /* Takes only as much width as the content requires */
     word-wrap: break-word; /* Prevents long words from overflowing */
     color: black;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .inner-chat-user{
@@ -113,7 +127,7 @@
 
 .user-chat{
     display: inline-flex; /* inline-flex allows it to shrink or expand based on content, similar to an inline element */
-    background-color: #7A67B6;
+    background-color: #7A68B6;
     padding: 1rem;
     max-width: 40%; /* Maximum width set to 40% of the container */
     border-radius: 12px;
@@ -121,6 +135,7 @@
     width: fit-content; /* Takes only as much width as the content requires */
     word-wrap: break-word; /* Prevents long words from overflowing */
     color: white;
+    font-weight: 400;
 }
 
 .send-message-button{
@@ -130,3 +145,67 @@
     border-radius: 12px;
     font-weight: 500;
 }
+
+.send-button-div{
+    margin-bottom: 1rem;
+}
+
+.btn-2 {
+    scale: 0.8;
+    position: absolute;
+    font-family: inherit;
+    font-size: 18px;
+    background-color: #7A68B6;
+    color: white;
+    padding: 15px 24px 15px 24px;
+    width: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 30px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: 2px solid black;
+    bottom: .25rem;
+}
+
+.btn-2 span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .btn-2 svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .btn-2:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+  
+  .btn-2:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+  
+  .btn-2:hover span {
+    transform: translateX(5em);
+  }
+  
+  .btn-2:active {
+    transform: scale(0.95);
+  }
+  
+  @keyframes fly-1 {
+    from {
+      transform: translateY(0.1em);
+    }
+  
+    to {
+      transform: translateY(-0.1em);
+    }
+  }
+  

@@ -49,15 +49,14 @@ const page = () => {
     return (
         <div className='flex min-h-lvh'>
             <div className="contacts flex flex-col justify-start min-h-lvh">
-                <div className='icons bg-gray-400 flex justify-center items-center gap-4'>
+                <div className='icons flex justify-center items-center gap-4'>
                     <div className='flex justify-center items-center h-full w-full'>Icon 1</div>
                     <div className='trianle-div flex justify-center items-center absolute'>Icon 2</div>
                 </div>
                 <div className='profiles'>
                     {profiles.map((profile,index)=>(
-                        <div key={index} className="profile flex flex-col bg-black text-white mb-2" onClick={() => setSelectedProfile(profiles[index])}>
-                            <p>{profile.userName}</p>
-                            <p>{profile.phone}</p>
+                        <div key={index} className="profile flex flex-col text-white mb-2" onClick={() => setSelectedProfile(profiles[index])}>
+                            <p className='contact-icon'>{Array.from(profile.userName)[0]}</p>
                         </div>
                     ))}
                 </div>
@@ -110,7 +109,28 @@ const page = () => {
                                 onChange={handleInputChange} // Update state on input change
                             />
                         </div>
-                        <button className='send-message-button' onClick={sendMessage}>Send</button>
+                        {/* <button className='send-message-button' onClick={sendMessage}>Send</button> */}
+                        <div className='send-button-div'>
+                            <button className="btn-2">
+                                <div className="svg-wrapper-1">
+                                    <div className="svg-wrapper">
+                                        <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 24 24"
+                                        width="24"
+                                        height="24"
+                                        >
+                                        <path fill="none" d="M0 0h24v24H0z"></path>
+                                        <path
+                                            fill="currentColor"
+                                            d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                                        ></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <span>Send</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
