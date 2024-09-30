@@ -1,14 +1,10 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import "./login.css"
+import "./login.css";
+import Link from "next/link";
 
-// Define the props interface for LoginForm
-interface LoginFormProps {
-  changePage: () => void;
-}
-
-const LoginForm: React.FC<LoginFormProps> = ({ changePage }) => {
+const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -27,8 +23,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ changePage }) => {
 
       const data = await response.json();
       if (data.token) {
-        localStorage.setItem("token", data.token);
-        router.push("/chats");
+        console.log(data);
+        router.replace("/chats");
       } else {
         console.error("Login failed:", data);
       }
@@ -40,7 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ changePage }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col border border-black p-5 bg-slate-50"
+      className="flex flex-col border border-black p-5 bg-slate-50 m-auto"
     >
       <h1 className="text-2xl">Login Form</h1>
       <div className="info-input">
@@ -68,18 +64,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ changePage }) => {
 
       <button className="btn-1" type="submit">
         <div className="original">Login</div>
-          <div className="letters">
-            <span>L</span>
-            <span>O</span>
-            <span>G</span>
-            <span>I</span>
-            <span>N</span>
-          </div>
+        <div className="letters">
+          <span>L</span>
+          <span>O</span>
+          <span>G</span>
+          <span>I</span>
+          <span>N</span>
+        </div>
       </button>
 
       <div className=" flex gap-1">
         <p>Dont have an account?</p>
-        <a onClick={changePage} className="go-to-register">Register Here</a>
+        <Link href={"/register"} className="go-to-register text-blue-600">
+          Register Here
+        </Link>
       </div>
     </form>
   );

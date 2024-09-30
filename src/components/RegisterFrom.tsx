@@ -1,14 +1,11 @@
 "use client";
-import { ChangeEventHandler, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import './register.css';
+import "./register.css";
+import "./login.css";
+import Link from "next/link";
 
-// Define the props interface for RegisterForm
-interface RegisterFormProps {
-  changePage: () => void;
-}
-
-const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
+const RegisterForm: React.FC = () => {
   const [name, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,13 +39,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
     const value = e.target.value;
     setConfirmPassword(value);
   };
-  
+
   const isPasswordMatch = password === confirmPassword;
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col border border-black p-5 gap-5 m-2 bg-slate-50"
+      className="flex flex-col border border-black p-5 gap-5 m-2 bg-slate-50 m-auto"
     >
       <h1 className="text-2xl">Registration Form</h1>
 
@@ -63,7 +60,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
           className="px-2 py-1"
         />
       </div>
-      
+
       <div className="flex flex-col">
         <label htmlFor="email">Enter your email:</label>
         <input
@@ -75,7 +72,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
           className="px-2 py-1"
         />
       </div>
-      
+
       <div className="flex flex-col">
         <label htmlFor="password">Enter your password:</label>
         <input
@@ -87,7 +84,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
           className="px-2 py-1"
         />
       </div>
-      
+
       <div className="flex flex-col">
         <label htmlFor="confirm-password">Confirm password:</label>
         <input
@@ -99,7 +96,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
           className="px-2 py-1"
         />
       </div>
-      
 
       <button
         type="submit"
@@ -111,8 +107,14 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ changePage }) => {
       </button>
 
       <div className=" flex gap-1">
-        <p>Dont have an account?</p>
-        <a onClick={changePage} className="go-to-register" id="login-button">Go to Login Page</a>
+        <p>Already have an account?</p>
+        <Link
+          href={"/login"}
+          className="go-to-register text-blue-600"
+          id="login-button"
+        >
+          Go to Login Page
+        </Link>
       </div>
     </form>
   );
