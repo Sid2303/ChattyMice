@@ -4,14 +4,14 @@ import { User } from "@/libs/models/userModel";
 import { connectToDatabase } from "@/libs/db";
 import { hashPassword } from "@/utils/hashPass";
 export async function POST(req: NextRequest) {
-  const { name, password, email } = await req.json();
+  const { username, password, email } = await req.json();
   await connectToDatabase();
   let newUser;
 
-  if (name || password || email) {
+  if (username || password || email) {
     const pass = await hashPassword(password);
     newUser = new User({
-      name: name,
+      name: username,
       email: email,
       password: pass,
     });
@@ -25,4 +25,3 @@ export async function POST(req: NextRequest) {
     user: newUser,
   });
 }
-

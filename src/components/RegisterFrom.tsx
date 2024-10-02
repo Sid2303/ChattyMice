@@ -5,7 +5,7 @@ import "./register.css";
 import Link from "next/link";
 
 const RegisterForm: React.FC = () => {
-  const [name, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -20,12 +20,12 @@ const RegisterForm: React.FC = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       const data = await response.json();
       if (data.message === "User created successfully") {
-        router.push("/chats");
+        router.push("/login");
       } else {
         console.error("Registration failed:", data);
       }
@@ -43,10 +43,7 @@ const RegisterForm: React.FC = () => {
 
   return (
     <div className="registeration-container">
-      <form
-      onSubmit={handleSubmit}
-      className="flex flex-col "
-    >
+      <form onSubmit={handleSubmit} className="flex flex-col ">
         <h1 className="text-2xl">Register Here</h1>
         <div className="details-container">
           <div className="flex flex-col single-detail">
@@ -107,11 +104,12 @@ const RegisterForm: React.FC = () => {
           Register
         </button> */}
 
-        <button 
+        <button
           type="submit"
           className="bg-blue-400 w-fit py-1 px-2 btn-1"
           disabled={!isPasswordMatch} // Disable if passwords don't match
-          style={{ cursor: isPasswordMatch ? "pointer" : "not-allowed" }}>
+          style={{ cursor: isPasswordMatch ? "pointer" : "not-allowed" }}
+        >
           <div className="original">Register</div>
           <div className="letters">
             <span>R</span>
