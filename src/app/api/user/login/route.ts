@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const token = generateToken(user);
 
-  cookies().set("token",token);
+  cookies().set("token", token);
 
-  return NextResponse.json({ token });
+  return NextResponse.redirect(new URL("/chats", req.url));
 }

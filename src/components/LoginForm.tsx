@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import "./login.css";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -20,13 +20,12 @@ const LoginForm: React.FC = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
-      const data = await response.json();
-      if (data.token) {
-        console.log(data);
-        router.replace("/chats");
+      console.log(response)
+      if (response.ok) {
+        router.push("/chats");
       } else {
-        console.error("Login failed:", data);
+        console.error("Cookie not found after delay");
+        // Handle potential cookie issues
       }
     } catch (error) {
       console.error("Error logging in:", error);
