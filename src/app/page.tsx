@@ -1,24 +1,13 @@
-"use client"
-
-import LoginForm from "@/components/LoginForm";
-import RegisterForm from "@/components/RegisterFrom";
-import { useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
-  const [currentPage, setCurrentPage] = useState("loginPage");
-
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-
-    {currentPage === "loginPage" ? (
-      <div>
-        <LoginForm changePage={() => setCurrentPage("registerPage")}/>
-      </div>
-    ) : (
-      <div>
-        <RegisterForm changePage={() => setCurrentPage("loginPage")} />
-      </div>
-    )}
-  </div>
+    <div className="flex flex-col justify-center items-center h-screen text-5xl">
+      <h1>Home Page</h1>
+      <Link href={"/chats"} className="bg-violet-500 p-5 my-16">
+        Start Chatting
+      </Link>
+      <p>Is page me styling daal diyo dalle!</p>
+    </div>
   );
 }

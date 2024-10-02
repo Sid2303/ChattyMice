@@ -1,53 +1,53 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react'
-import './style.css'
+import React, { useState } from "react";
+import "./style.css";
 import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from '@/components/Sidebar/sidebat';
 import Profile from '@/components/Profile/profile';
 import Chat from '@/components/Chat/chat';
 
-const page = () => {
-    const profiles: {
-        userName: string;
-        phone: number;
-        chat: { sender: 'profile' | 'user'; message: string }[];
-    }[] = [
-        {
-            userName: "Sid",
-            phone: 8279500601,
-            chat: [
-                { sender: 'profile', message: 'Hello from Sid!' },
-                { sender: 'user', message: 'Hi Sid, how are you?' }
-            ]
-        },
-        {
-            userName: "Ranghar",
-            phone: 8279500681,
-            chat: [
-                { sender: 'profile', message: 'Hello from Ranghar!' },
-                { sender: 'user', message: 'Hey Ranghar, what’s up?' }
-            ]
-        }
-    ];
+console.log(selectEmoji);
+const Page = () => {
+  const profiles: {
+    userName: string;
+    phone: number;
+    chat: { sender: "profile" | "user"; message: string }[];
+  }[] = [
+    {
+      userName: "Sid",
+      phone: 8279500601,
+      chat: [
+        { sender: "profile", message: "Hello from Sid!" },
+        { sender: "user", message: "Hi Sid, how are you?" },
+      ],
+    },
+    {
+      userName: "Ranghar",
+      phone: 8279500681,
+      chat: [
+        { sender: "profile", message: "Hello from Ranghar!" },
+        { sender: "user", message: "Hey Ranghar, what’s up?" },
+      ],
+    },
+  ];
 
-    function sendMessage(event: React.MouseEvent<HTMLButtonElement>) {
-        selectedProfile.chat.push(
-            {
-                sender: 'user',
-                message: currentMessage
-            }
-        );
-        setCurrentMessage("");
-    }
+  function sendMessage(event: React.FormEvent) {
+    event.preventDefault();
+    selectedProfile.chat.push({
+      sender: "user",
+      message: currentMessage,
+    });
+    setCurrentMessage("");
+  }
 
-    const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
-    const [currentMessage,setCurrentMessage] = useState<string >("");
+  const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
+  const [currentMessage, setCurrentMessage] = useState<string>("");
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCurrentMessage(e.target.value);
-        console.log(currentMessage);
-    };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCurrentMessage(e.target.value);
+    console.log(currentMessage);
+  };
 
     return (
         <div className='flex min-h-lvh'>
@@ -90,9 +90,14 @@ const page = () => {
                         </div>
                     </div>
                 </div>
+                <span>Send</span>
+              </button>
             </div>
-        </div>
-    )
-}
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default Page;
