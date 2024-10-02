@@ -4,9 +4,11 @@ import "./login.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [connectionState, setConnectionState] = useState("")
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -25,6 +27,7 @@ const LoginForm: React.FC = () => {
         router.push("/chats");
       } else {
         console.error("Cookie not found after delay");
+        setConnectionState("connection-failed")
         // Handle potential cookie issues
       }
     } catch (error) {
@@ -33,52 +36,66 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex flex-col border border-black p-5 bg-slate-50 m-auto"
-    >
-      <h1 className="text-2xl">Login Form</h1>
-      <div className="info-input">
-        <label htmlFor="email">Enter your email:</label>
-        <input
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Enter your email..."
-          className="px-2 py-1"
-        />
-      </div>
-      <div className="info-input mb-6">
-        <label htmlFor="password">Enter your password:</label>
-        <input
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Enter your password"
-          className="px-2 py-1"
-        />
-      </div>
+    <div className="login-container">
+      <form
+        onSubmit={handleSubmit}
+        className="flex-col p-5 m-auto"
+      >
+        <h1 className="text-2xl login-text">Login Here</h1>
+        <div className="info-container">
+          <div className="info-input">
+            <label htmlFor="email">Enter your email:</label>
+            <input
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              name="email"
+              id="email"
+              placeholder="Enter your email..."
+              className="px-2 py-1"
+            />
+          </div>
+          <div className="info-input">
+            <label htmlFor="password">Enter your password:</label>
+            <input
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Enter your password"
+              className="px-2 py-1 "
+            />
+            <a className="mt-3" href="">Forgot Password?</a>
+          </div>
+          {connectionState=="connection-failed"?
+            <div className="wrong-input-state">
+              <p>Wrong Email or Password !</p>
+            </div>:<div>
 
-      <button className="btn-1" type="submit">
-        <div className="original">Login</div>
-        <div className="letters">
-          <span>L</span>
-          <span>O</span>
-          <span>G</span>
-          <span>I</span>
-          <span>N</span>
+            </div>
+          }
         </div>
-      </button>
 
-      <div className=" flex gap-1">
-        <p>Dont have an account?</p>
-        <Link href={"/register"} className="go-to-register text-blue-600">
-          Register Here
-        </Link>
-      </div>
-    </form>
+        
+
+        <button className="btn-1" type="submit">
+          <div className="original">Login</div>
+          <div className="letters">
+            <span>L</span>
+            <span>O</span>
+            <span>G</span>
+            <span>I</span>
+            <span>N</span>
+          </div>
+        </button>
+
+        <div className=" flex gap-1">
+          <p>Dont have an account?</p>
+          <Link href={"/register"} className="go-to-register text-blue-600">
+            Register Here
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 };
 
