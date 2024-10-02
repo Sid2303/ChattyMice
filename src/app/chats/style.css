@@ -3,61 +3,6 @@
     outline: none;
 }
 
-.trianle-div{
-    clip-path: polygon(100% 51%, 0 32%, 0 67%);
-    height: 35%;
-    width: 6rem;
-    background-color: #7A67B6;
-    left: 6.3rem;
-}
-
-.contacts{
-    width: 7%;
-    background-color: #7A67B6;
-}
-
-.profiles{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    height: 88%;
-    width: 100%;
-    z-index: 2;
-    background-color: #7A67B6;
-    margin-top: .5rem;
-}
-
-.profile{
-    cursor: pointer;
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    width: 65%;
-    aspect-ratio: 1 / 1;
-    background-color: #C9BCF2;
-    border-radius: 50%;
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-
-.icons{
-    height: 12%;
-}
-
-.chat-section{
-    width: 100%;
-    background-color: #242038;
-}
-
-.chatter-info{
-    height: 14%;
-    width: 100%;
-    background-color: #533AA5;
-}
-
 .enter-text{
     height: 12%;
     width: 100%;
@@ -92,50 +37,6 @@
     width: 50px; /* Adjust based on your design */
     height: 50px; /* Adjust based on your design */
     cursor: pointer;
-}
-
-.chat-div{
-    display: block;
-    width: 100%;
-}
-
-.inner-chat-profile{
-    display: block;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.profile-chat {
-    display: inline-flex; /* inline-flex allows it to shrink or expand based on content, similar to an inline element */
-    background-color: #C9BCF2;
-    padding: 1rem;
-    max-width: 40%; /* Maximum width set to 40% of the container */
-    border-radius: 12px;
-    height: auto; /* Let the height adjust automatically */
-    width: fit-content; /* Takes only as much width as the content requires */
-    word-wrap: break-word; /* Prevents long words from overflowing */
-    color: black;
-    font-weight: 400;
-}
-
-.inner-chat-user{
-    display: flex;
-    width: 100%;
-    margin-bottom: 1rem;
-    justify-content: end;
-}
-
-.user-chat{
-    display: inline-flex; /* inline-flex allows it to shrink or expand based on content, similar to an inline element */
-    background-color: #7A68B6;
-    padding: 1rem;
-    max-width: 40%; /* Maximum width set to 40% of the container */
-    border-radius: 12px;
-    height: auto; /* Let the height adjust automatically */
-    width: fit-content; /* Takes only as much width as the content requires */
-    word-wrap: break-word; /* Prevents long words from overflowing */
-    color: white;
-    font-weight: 400;
 }
 
 .send-message-button{
