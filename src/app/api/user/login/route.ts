@@ -3,9 +3,8 @@ import { connectToDatabase } from "@/libs/db";
 import { User } from "@/libs/models/userModel";
 import bcrypt from "bcrypt";
 import { generateToken } from "@/utils/jwtToken";
-import { cookies } from "next/headers";
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   const { email, password } = await req.json();
   await connectToDatabase();
 
@@ -19,8 +18,14 @@ export async function POST(req: NextRequest) {
   }
 
   const token = generateToken(user);
+  
+  const response = NextResponse.json({ success: true });
+    
+    // Set the cookie
+    await response.cookies.set('userToken', 'exampleTokenValue', {
+      httpOnly: true,
+      path: '/', // Cookie available across the site
+    });
 
-  cookies().set("token", token);
-
-  return NextResponse.redirect(new URL("/chats", req.url));
+    return response;
 }
