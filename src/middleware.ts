@@ -1,18 +1,19 @@
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
-  console.log("middleware () ");
+  const path = request.nextUrl.pathname;
+  const userToken = request.cookies.get("userToken");
 
-  if (!cookies().has("token")) {
-    console.log(cookies().has("token") + "     this is cookies from token");
-    return NextResponse.redirect(new URL("/login", request.url));
-  } else {
-    return NextResponse.next();
+  const publicPath = path === "/register" || path === "/login" || path === "/";
+
+  if (publicPath && userToken) {
+    return NextResponse.redirect(new URL("/chats", request.url));
+  }
+  if (!userToken && !publicPath) {
+    return NextResponse.redirect(new URL("/register", request.url));
   }
 }
-//array below tells which paths are able to call middleware when they are accessed.
+
 export const config = {
-  matcher: ["/chats/:path*", "/api/login/:path*"],
+  matcher: ["/chats", "/login", "/register", "/"],
 };

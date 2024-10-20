@@ -22,11 +22,9 @@ const LoginForm: React.FC = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-      console.log(response)
       if (response.ok) {
         router.push("/chats");
       } else {
-        console.error("Cookie not found after delay");
         setConnectionState("connection-failed")
         // Handle potential cookie issues
       }
@@ -66,7 +64,7 @@ const LoginForm: React.FC = () => {
             />
             <a className="mt-3" href="">Forgot Password?</a>
           </div>
-          {connectionState=="connection-failed"?
+          {connectionState==="connection-failed"?
             <div className="wrong-input-state">
               <p>Wrong Email or Password !</p>
             </div>:<div>

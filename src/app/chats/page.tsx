@@ -93,7 +93,7 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <span>Send</span>
+        <span></span>
       </div>
     </div>
   );
