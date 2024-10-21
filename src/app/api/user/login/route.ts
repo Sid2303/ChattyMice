@@ -18,14 +18,25 @@ export async function POST(req: Request) {
   }
 
   const token = generateToken(user);
-  
-  const response = NextResponse.json({ success: true });
-    
-    // Set the cookie
-    await response.cookies.set('userToken', 'exampleTokenValue', {
-      httpOnly: true,
-      path: '/', // Cookie available across the site
-    });
 
-    return response;
+  const response = NextResponse.json({ success: true });
+
+  // Set the cookie
+  await response.cookies.set("token", token, {
+    httpOnly: true,
+    path: "/", // Cookie available across the site
+  });
+
+  return response;
+}
+
+export async function DELETE() {
+  const response = NextResponse.json({ message: "Cookie deleted" });
+
+  response.cookies.set("token", "", {
+    httpOnly: true,
+    expires: new Date(0),
+  });
+
+  return response;
 }

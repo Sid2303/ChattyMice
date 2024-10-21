@@ -4,11 +4,10 @@ import "./login.css";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [connectionState, setConnectionState] = useState("")
+  const [connectionState, setConnectionState] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -24,8 +23,9 @@ const LoginForm: React.FC = () => {
       });
       if (response.ok) {
         router.push("/chats");
+        router.refresh();
       } else {
-        setConnectionState("connection-failed")
+        setConnectionState("connection-failed");
         // Handle potential cookie issues
       }
     } catch (error) {
@@ -35,10 +35,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="login-container">
-      <form
-        onSubmit={handleSubmit}
-        className="flex-col p-5 m-auto"
-      >
+      <form onSubmit={handleSubmit} className="flex-col p-5 m-auto">
         <h1 className="text-2xl login-text">Login Here</h1>
         <div className="info-container">
           <div className="info-input">
@@ -62,18 +59,18 @@ const LoginForm: React.FC = () => {
               placeholder="Enter your password"
               className="px-2 py-1 "
             />
-            <a className="mt-3" href="">Forgot Password?</a>
+            <a className="mt-3" href="">
+              Forgot Password?
+            </a>
           </div>
-          {connectionState==="connection-failed"?
+          {connectionState === "connection-failed" ? (
             <div className="wrong-input-state">
               <p>Wrong Email or Password !</p>
-            </div>:<div>
-
             </div>
-          }
+          ) : (
+            <div></div>
+          )}
         </div>
-
-        
 
         <button className="btn-1" type="submit">
           <div className="original">Login</div>
