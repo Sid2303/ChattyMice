@@ -2,10 +2,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const userToken = request.cookies.get("userToken");
+  const userToken = request.cookies.get("token");
 
-  const publicPath = path === "/register" || path === "/login" || path === "/";
-
+  const publicPath = path === "/register" || path === "/login";
+  if (path === "/") {
+    return;
+  }
   if (publicPath && userToken) {
     return NextResponse.redirect(new URL("/chats", request.url));
   }
@@ -15,5 +17,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/chats", "/login", "/register", "/"],
+  matcher: ["/dashboard", "/chats", "/login", "/register"],
 };
