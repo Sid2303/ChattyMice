@@ -3,6 +3,7 @@
     outline: none;
 }
 
+
 .trianle-div{
     clip-path: polygon(100% 51%, 0 32%, 0 67%);
     height: 35%;
@@ -42,7 +43,20 @@
     margin-bottom: 1.5rem;
 }
 
-
 .icons{
-    height: 12%;
+    height: 10%;
+    align-items: center;
+    padding-top: 15%;
+}
+
+.icons:hover{
+    cursor: pointer;
+}
+
+.hamburger{
+    width: 35px;
+    height: 5px;
+    background-color: rgb(193, 145, 255);
+    margin: 4px 0;
+    border-radius: 12px;
 }
