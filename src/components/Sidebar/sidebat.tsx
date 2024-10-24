@@ -18,9 +18,10 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ profiles, setSelectedProfile }) => {
     return (
         <div className="contacts flex flex-col justify-start min-h-lvh">
-            <div className='icons flex justify-center items-center gap-4'>
-                <div className='flex justify-center items-center h-full w-full'>Icon 1</div>
-                <div className='trianle-div flex justify-center items-center absolute'>Icon 2</div>
+            <div className='icons flex flex-col'>
+                <div className='hamburger'></div>
+                <div className='hamburger'></div>
+                <div className='hamburger'></div>
             </div>
             <div className='profiles'>
                 {profiles.map((profile, index) => (

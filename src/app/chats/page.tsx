@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from "@/components/Sidebar/sidebat";
@@ -8,6 +8,9 @@ import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
 
 console.log(selectEmoji);
+
+
+
 const Page = () => {
   const profiles: {
     userName: string;
@@ -41,6 +44,58 @@ const Page = () => {
     setCurrentMessage("");
   }
 
+  useEffect(() => {
+    fetch('/api/user/conversation')
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        const participants = data.result[0].participants;
+        const id = data.result[0]._id;
+        console.log(participants,id)
+        setConversationId(conversationId)
+      })
+      .catch((error) => {
+        console.error('Error fetching messages:', error);
+      });
+  }, []);
+
+  
+  const [conversationId, setConversationId] = useState<string>("");
+  const userId:string = "66f411bf51709f4f0ca5a775"
+
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMessageById = async () => {
+      try {
+        const response = await fetch(`/api/conversation/${conversationId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error('Failed to fetch the message');
+        }
+  
+        // Await the JSON response directly
+        const result = await response.json();
+        console.log(result); // Log the result directly
+  
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+  
+    if (conversationId) {
+      fetchMessageById();
+    }
+  }, [conversationId]); // Only run when conversationId changes
+  
+
   const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
   const [currentMessage, setCurrentMessage] = useState<string>("");
 
@@ -57,7 +112,7 @@ const Page = () => {
           userName={selectedProfile.userName}
           phone={selectedProfile.phone}
         />
-        <Chat profile={selectedProfile} />
+        <Chat profile={selectedProfile}/>
         <div className="enter-text flex items-center justify-center">
           <div className="emoji-selection"></div>
           <div className="input-message ml-3">
@@ -66,8 +121,8 @@ const Page = () => {
                 className="w-full h-full pl-3"
                 type="text"
                 placeholder="Enter Message: "
-                value={currentMessage} // Set the input value to the state
-                onChange={handleInputChange} // Update state on input change
+                value={currentMessage}
+                onChange={handleInputChange}
               />
             </div>
             <div className="send-button-div">

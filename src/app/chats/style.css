@@ -3,6 +3,10 @@
     outline: none;
 }
 
+input{
+  border: none;
+}
+
 .enter-text{
     height: 12%;
     width: 100%;

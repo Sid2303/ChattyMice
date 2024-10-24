@@ -15,6 +15,8 @@ interface ChatProps {
 }
 
 const Chat: React.FC<ChatProps> = ({ profile }) => {
+
+
     return (
         <div className="chat-section relative flex flex-col justify-end h-full min-h-[500px]">
             <div className="chat-messages flex flex-col w-full p-4 gap-2">
