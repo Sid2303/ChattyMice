@@ -12,6 +12,12 @@ console.log(selectEmoji);
 
 
 const Page = () => {
+
+  const userId:string = "6719f0569dc81e5aa76e5560" //user id (set from cookies)
+  const [currentConversationId, setCurrentConversationId] = useState<string>(""); // set the current selected conversation
+  const allFriends: string[] = [];
+  const id: string= allFriends[0];
+
   const profiles: {
     userName: string;
     phone: number;
@@ -44,57 +50,69 @@ const Page = () => {
     setCurrentMessage("");
   }
 
+
+  //Gets all the users that have had a conversation with user
   useEffect(() => {
     fetch('/api/user/conversation')
+      .then((res) => res.json())
+      .then((data) => {
+        const participants = data.result[0].participants;
+        
+        // Finds the first other participant who isn't the current user
+        const otherParticipant = participants.find((participant:any) => participant !== userId);
+
+        // Adds other participant to allFriends if not already present
+        if (otherParticipant && !allFriends.includes(otherParticipant)) {
+          allFriends.push(otherParticipant);
+        }
+        
+        console.log("All friends:", allFriends);
+      })}
+    ,[])
+
+  //Gets a conversation(gets all conversation needs to be modified for getting conversation with only one)
+  useEffect(() => {
+    fetch('/api/user/conversation')
+      .then((res) => res.json())
+      .then((data) => {
+        const participants = data.result[0].participants;
+        
+        const conversationId = data.result[0]._id;
+        console.log("Conversation id:", conversationId);
+        
+        setCurrentConversationId(conversationId);
+      })
+      .catch((error) => {
+        console.error('Error fetching messages:', error);
+      });
+  }, [userId]);
+
+
+  //Gets all message and logs it(needs to be completed to get messages from selected id)
+  useEffect(() => {
+    fetch('/api/user/conversation/messages')
       .then((res) => {
         return res.json();
       })
       .then((data) => {
-        const participants = data.result[0].participants;
-        const id = data.result[0]._id;
-        console.log(participants,id)
-        setConversationId(conversationId)
+        const messages = data.result[0];
+        console.log("Single message: ",messages.text)
       })
       .catch((error) => {
         console.error('Error fetching messages:', error);
       });
   }, []);
 
-  
-  const [conversationId, setConversationId] = useState<string>("");
-  const userId:string = "66f411bf51709f4f0ca5a775"
-
-  const [message, setMessage] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchMessageById = async () => {
-      try {
-        const response = await fetch(`/api/conversation/${conversationId}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error('Failed to fetch the message');
-        }
-  
-        // Await the JSON response directly
-        const result = await response.json();
-        console.log(result); // Log the result directly
-  
-      } catch (error: any) {
-        setError(error.message);
-      }
-    };
-  
-    if (conversationId) {
-      fetchMessageById();
-    }
-  }, [conversationId]); // Only run when conversationId changes
-  
+  //Getting a username from an id
+  useEffect(()=>{
+        fetch(`/api/user/${id}`)
+        .then((res)=>{
+          return res.json;
+        })
+        .then((data)=>{
+          console.log(data)
+        })
+  },[])
 
   const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
   const [currentMessage, setCurrentMessage] = useState<string>("");
