@@ -6,17 +6,17 @@ import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from "@/components/Sidebar/sidebat";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
+import { loggedInUser } from "@/utils/getUser";
 
 console.log(selectEmoji);
 
-
-
 const Page = () => {
+  const userId = loggedInUser(); //user id (set from cookies)
 
-  const userId:string = "6719f0569dc81e5aa76e5560" //user id (set from cookies)
-  const [currentConversationId, setCurrentConversationId] = useState<string>(""); // set the current selected conversation
+  const [currentConversationId, setCurrentConversationId] =
+    useState<string>(""); // set the current selected conversation
   const allFriends: string[] = [];
-  const id: string= allFriends[0];
+  const id: string = allFriends[0];
 
   const profiles: {
     userName: string;
@@ -50,69 +50,69 @@ const Page = () => {
     setCurrentMessage("");
   }
 
-
   //Gets all the users that have had a conversation with user
   useEffect(() => {
-    fetch('/api/user/conversation')
+    fetch("/api/user/conversation")
       .then((res) => res.json())
       .then((data) => {
         const participants = data.result[0].participants;
-        
+
         // Finds the first other participant who isn't the current user
-        const otherParticipant = participants.find((participant:any) => participant !== userId);
+        const otherParticipant = participants.find(
+          (participant: any) => participant !== userId
+        );
 
         // Adds other participant to allFriends if not already present
         if (otherParticipant && !allFriends.includes(otherParticipant)) {
           allFriends.push(otherParticipant);
         }
-        
+
         console.log("All friends:", allFriends);
-      })}
-    ,[])
+      });
+  }, []);
 
   //Gets a conversation(gets all conversation needs to be modified for getting conversation with only one)
   useEffect(() => {
-    fetch('/api/user/conversation')
+    fetch("/api/user/conversation")
       .then((res) => res.json())
       .then((data) => {
         const participants = data.result[0].participants;
-        
+
         const conversationId = data.result[0]._id;
         console.log("Conversation id:", conversationId);
-        
+
         setCurrentConversationId(conversationId);
       })
       .catch((error) => {
-        console.error('Error fetching messages:', error);
+        console.error("Error fetching messages:", error);
       });
   }, [userId]);
 
-
   //Gets all message and logs it(needs to be completed to get messages from selected id)
   useEffect(() => {
-    fetch('/api/user/conversation/messages')
+    fetch("/api/user/conversation/messages")
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         const messages = data.result[0];
-        console.log("Single message: ",messages.text)
+        console.log("Single message: ", messages.text);
       })
       .catch((error) => {
-        console.error('Error fetching messages:', error);
+        console.error("Error fetching messages:", error);
       });
   }, []);
 
-  //Getting a username from an id
-  useEffect(()=>{
-        fetch(`/api/user/${id}`)
-        .then((res)=>{
-          return res.json;
-        })
-        .then((data)=>{
-          console.log(data)
-        })
-  },[])
+  //Getting a user info from an id
+  useEffect(() => {
+    fetch(`/api/user/66f6e4e66593704903ac8387`)
+      .then((res) => {
+        return res.json;
+      })
+      .then((data) => {
+        console.log("TERI ID", data);
+      });
+  }, []);
 
   const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
   const [currentMessage, setCurrentMessage] = useState<string>("");
@@ -130,7 +130,7 @@ const Page = () => {
           userName={selectedProfile.userName}
           phone={selectedProfile.phone}
         />
-        <Chat profile={selectedProfile}/>
+        <Chat profile={selectedProfile} />
         <div className="enter-text flex items-center justify-center">
           <div className="emoji-selection"></div>
           <div className="input-message ml-3">
@@ -166,7 +166,6 @@ const Page = () => {
             </div>
           </div>
         </div>
-        <span></span>
       </div>
     </div>
   );

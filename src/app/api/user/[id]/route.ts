@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
 import { connectionString } from "@/libs/db";
 import { NextRequest, NextResponse } from "next/server";
+import { User } from "@/libs/models/userModel";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const itemId = params.id; // Access the 'id' from params
-  console.log("ID of the GET function = " + itemId);
-  
-  console.log("id of the get fucntion = " + params.id);
+  const userId = params.id; // Access the 'id' from params
   await mongoose.connect(connectionString);
-  return NextResponse.json({ resutlt: params.id });
+  const data = await User.findById(userId);
+
+  console.log("TERI USER ID = ", data);
+  return NextResponse.json({ resutlt: data });
 }

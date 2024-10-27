@@ -1,4 +1,3 @@
-import Logout from "@/components/Logout";
 import Link from "next/link";
 
 export default function Home() {
@@ -12,6 +11,7 @@ export default function Home() {
         Start Chatting
       </Link>
       <p>Is page me styling daal diyo dalle!</p>
+      
     </div>
   );
 }
