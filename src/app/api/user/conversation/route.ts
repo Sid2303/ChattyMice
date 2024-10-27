@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
     });
     newConvo.save();
 
-    console.log(newConvo);
     return NextResponse.json({ result: newConvo });
   } else {
     return NextResponse.json({ result: "Unable to get data! "});

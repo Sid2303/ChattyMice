@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Logout from "@/components/Logout";
-import { NextRequest } from "next/server";
 import { cookies } from "next/headers";
 
 export const metadata: Metadata = {

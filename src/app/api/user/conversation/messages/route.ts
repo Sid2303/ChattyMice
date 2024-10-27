@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   await connectToDatabase();
   const data = await Message.find();
-  console.log(req);
   return NextResponse.json({ from: "Messages", result: data });
 }
 
@@ -20,7 +19,6 @@ export async function POST(req: NextRequest) {
       text: text,
     });
     newMessage.save();
-    console.log(newMessage);
     return NextResponse.json({ result: newMessage });
   } else {
     return NextResponse.json({ result: "Unable to get data! " });
