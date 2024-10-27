@@ -9,6 +9,7 @@ export async function POST(req: Request) {
   await connectToDatabase();
 
   const user = await User.findOne({ email }).select("+password");
+
   if (!user) {
     return NextResponse.json({ error: "User not found" }, { status: 401 });
   }
