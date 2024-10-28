@@ -1,6 +1,8 @@
+import { loggedInUser } from "@/utils/getUser";
 import Link from "next/link";
 
 export default function Home() {
+  const user = loggedInUser().then((res)=>{return res.userId});
   return (
     <div className="flex flex-col justify-center items-center h-screen text-5xl">
       <h1>Home Page</h1>
@@ -11,7 +13,7 @@ export default function Home() {
         Start Chatting
       </Link>
       <p>Is page me styling daal diyo dalle!</p>
-      
+      {user}
     </div>
   );
 }
