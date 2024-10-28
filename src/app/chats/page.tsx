@@ -6,14 +6,14 @@ import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from "@/components/Sidebar/sidebat";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
-
-console.log(selectEmoji);
-
-
+import { loggedInUser } from "@/utils/getUser";
+import getAllConversation from "@/utils/getAllConversations";
 
 const Page = () => {
 
-  const userId:string = "6719f0569dc81e5aa76e5560" //user id (set from cookies)
+  // const userId = loggedInUser()
+  // console.log("UID: ",userId)
+
   const [currentConversationId, setCurrentConversationId] = useState<string>(""); // set the current selected conversation
   const allFriends: string[] = [];
   const id: string= allFriends[0];
@@ -59,46 +59,54 @@ const Page = () => {
 
   //Gets all the users that have had a conversation with user
   useEffect(() => {
-    fetch('/api/user/conversation')
-      .then((res) => res.json())
-      .then((data) => {
-        const participants = data.result[0].participants;
-        
-        // Finds the first other participant who isn't the current user
-        const otherParticipant = participants.find((participant:any) => participant !== userId);
+    // getAllConversation(userId)
+    // console.log(userId)
 
-        // Adds other participant to allFriends if not already present
-        if (otherParticipant && !allFriends.includes(otherParticipant)) {
-          allFriends.push(otherParticipant);
-        }
+    fetch("/api/user")
+      .then((res)=>res.json())
+      .then((data)=>{
+        console.log("UserId: ",data.user.userId)
+      })
+    
+    // fetch('/api/user/conversation')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     const participants = data.result[0].participants;
         
-        console.log("All friends:", allFriends);
-      })}
+    //     // Finds the first other participant who isn't the current user
+    //     const otherParticipant = participants.find((participant:any) => participant !== userId);
+
+    //     // Adds other participant to allFriends if not already present
+    //     if (otherParticipant && !allFriends.includes(otherParticipant)) {
+    //       allFriends.push(otherParticipant);
+    //     }
+        
+    //     console.log("All friends:", allFriends);
+    //   })
+  }
     ,[])
-
-  //Gets a conversation
-  useEffect(() => {
-    fetch('/api/user/conversation')
-      .then((res) => res.json())
-      .then((data) => {
-        data.result.forEach((conversation: { _id: string; category: string; participants: Array<string>; }, index: string) => {
-          const participants: Array<string> = conversation.participants;
-          if(participants.includes(userId)){
-            if(!allConversation.includes(conversation._id)){
-              allConversation.push(conversation._id)
-            }
-          }
-          console.log("All chats: ",allConversation)
-        });
-  })
-      .catch((error) => {
-        console.error('Error fetching messages:', error);
-      });
-  }, [userId]);
 
 
   //Gets all message and logs it(needs to be completed to get messages from selected id)
   useEffect(() => {
+    fetch('/api/user/conversation')
+      .then((res) => res.json())
+      .then((data) => {
+        data.result.forEach((conversation: { _id: string; category: string; participants: string; }, index: string) => {
+        });
+  
+        // Optionally, if you need to set the first conversation's ID
+        if (data.result.length > 0) {
+          const firstConversationId = data.result[0]._id;
+          console.log("First conversation ID:", firstConversationId);
+          // setCurrentConversationId(firstConversationId);
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching messages:', error);
+      });
+  
+
     fetch('/api/user/conversation/messages')
       .then((res) => {
         return res.json();
@@ -119,7 +127,7 @@ const Page = () => {
           return res.json;
         })
         .then((data)=>{
-          console.log(data)
+          // console.log(data)
         })
   },[])
 
