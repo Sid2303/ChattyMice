@@ -9,6 +9,6 @@ export async function loggedInUser() {
   }
   const data = jwt.decode(value!);
   console.log("COOKIES KA DATA = ", data);
-  return data;
+  return data as User;
 }
 
