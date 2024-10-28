@@ -13,20 +13,23 @@
 }
 
 .contacts{
-    width: 7%;
+    width: 5rem;
     background-color: #7A67B6;
+    z-index: 10;
+    position: fixed;
 }
 
-.profiles{
+.profiles {
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
-    height: 88%;
+    /* height: calc(100% - 5rem - 12%); Adjusts for the fixed header and footer heights */
     width: 100%;
     z-index: 2;
     background-color: #7A67B6;
-    margin-top: .5rem;
+    margin-top: 2rem; /* Matches the height of .chatter-info to position it below */
+    overflow-y: auto; /* Allows scrolling if content exceeds available space */
 }
 
 .profile{

@@ -3,6 +3,12 @@
     background-color: #242038;
 }
 
+.chat-messages{
+    overflow-y: auto;
+    margin-bottom: 6%;
+    padding-left: 6rem;
+    padding-top: 6rem;
+}
 
 .chat-div{
     display: block;
@@ -46,5 +52,4 @@
     color: white;
     font-weight: 400;
     background-color: #7A68B6;
-   
 }

@@ -6,17 +6,18 @@ import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from "@/components/Sidebar/sidebat";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
-import { loggedInUser } from "@/utils/getUser";
 
 console.log(selectEmoji);
 
-const Page = () => {
-  const userId = loggedInUser(); //user id (set from cookies)
 
-  const [currentConversationId, setCurrentConversationId] =
-    useState<string>(""); // set the current selected conversation
+
+const Page = () => {
+
+  const userId:string = "6719f0569dc81e5aa76e5560" //user id (set from cookies)
+  const [currentConversationId, setCurrentConversationId] = useState<string>(""); // set the current selected conversation
   const allFriends: string[] = [];
-  const id: string = allFriends[0];
+  const id: string= allFriends[0];
+  const allConversation: Array<String> = [];
 
   const profiles: {
     userName: string;
@@ -43,76 +44,84 @@ const Page = () => {
 
   function sendMessage(event: React.FormEvent) {
     event.preventDefault();
-    selectedProfile.chat.push({
-      sender: "user",
-      message: currentMessage,
-    });
-    setCurrentMessage("");
+    if(currentMessage){
+      selectedProfile.chat.push({
+        sender: "user",
+        message: currentMessage,
+      });
+      setCurrentMessage("");
+    }
+    else{
+      console.log("Please send message")
+    }
   }
+
 
   //Gets all the users that have had a conversation with user
   useEffect(() => {
-    fetch("/api/user/conversation")
+    fetch('/api/user/conversation')
       .then((res) => res.json())
       .then((data) => {
         const participants = data.result[0].participants;
-
+        
         // Finds the first other participant who isn't the current user
-        const otherParticipant = participants.find(
-          (participant: any) => participant !== userId
-        );
+        const otherParticipant = participants.find((participant:any) => participant !== userId);
 
         // Adds other participant to allFriends if not already present
         if (otherParticipant && !allFriends.includes(otherParticipant)) {
           allFriends.push(otherParticipant);
         }
-
+        
         console.log("All friends:", allFriends);
-      });
-  }, []);
+      })}
+    ,[])
 
-  //Gets a conversation(gets all conversation needs to be modified for getting conversation with only one)
+  //Gets a conversation
   useEffect(() => {
-    fetch("/api/user/conversation")
+    fetch('/api/user/conversation')
       .then((res) => res.json())
       .then((data) => {
-        const participants = data.result[0].participants;
-
-        const conversationId = data.result[0]._id;
-        console.log("Conversation id:", conversationId);
-
-        setCurrentConversationId(conversationId);
-      })
+        data.result.forEach((conversation: { _id: string; category: string; participants: Array<string>; }, index: string) => {
+          const participants: Array<string> = conversation.participants;
+          if(participants.includes(userId)){
+            if(!allConversation.includes(conversation._id)){
+              allConversation.push(conversation._id)
+            }
+          }
+          console.log("All chats: ",allConversation)
+        });
+  })
       .catch((error) => {
-        console.error("Error fetching messages:", error);
+        console.error('Error fetching messages:', error);
       });
   }, [userId]);
 
+
   //Gets all message and logs it(needs to be completed to get messages from selected id)
   useEffect(() => {
-    fetch("/api/user/conversation/messages")
+    fetch('/api/user/conversation/messages')
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         const messages = data.result[0];
-        console.log("Single message: ", messages.text);
+        console.log("Single message: ",messages.text)
       })
       .catch((error) => {
-        console.error("Error fetching messages:", error);
+        console.error('Error fetching messages:', error);
       });
   }, []);
 
-  //Getting a user info from an id
-  useEffect(() => {
-    fetch(`/api/user/66f6e4e66593704903ac8387`)
-      .then((res) => {
-        return res.json;
-      })
-      .then((data) => {
-        console.log("TERI ID", data);
-      });
-  }, []);
+  //Getting a username from an id
+  useEffect(()=>{
+        fetch(`/api/user/${id}`)
+        .then((res)=>{
+          return res.json;
+        })
+        .then((data)=>{
+          console.log(data)
+        })
+  },[])
 
   const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
   const [currentMessage, setCurrentMessage] = useState<string>("");
@@ -123,28 +132,29 @@ const Page = () => {
   };
 
   return (
-    <div className="flex min-h-lvh">
+    <div className="flex min-h-lvh overflow-hidden">
       <Sidebar profiles={profiles} setSelectedProfile={setSelectedProfile} />
       <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
         <Profile
           userName={selectedProfile.userName}
           phone={selectedProfile.phone}
         />
-        <Chat profile={selectedProfile} />
-        <div className="enter-text flex items-center justify-center">
+        <Chat profile={selectedProfile}/>
+        <div className="enter-text flex items-center justify-center overflow-hidden">
           <div className="emoji-selection"></div>
-          <div className="input-message ml-3">
-            <div className="input-message flex">
-              <input
-                className="w-full h-full pl-3"
-                type="text"
-                placeholder="Enter Message: "
-                value={currentMessage}
-                onChange={handleInputChange}
+          <form
+            className="input-message ml-3 flex items-center"
+            onSubmit={sendMessage}
+          >
+            <input
+              className=""
+              type="text"
+              placeholder="Enter Message: "
+              value={currentMessage}
+              onChange={handleInputChange}
               />
-            </div>
             <div className="send-button-div">
-              <button className="btn-2" onClick={sendMessage}>
+              <button className="btn-2" type="submit">
                 <div className="svg-wrapper-1">
                   <div className="svg-wrapper">
                     <svg
@@ -164,8 +174,8 @@ const Page = () => {
                 <span>Send</span>
               </button>
             </div>
-          </div>
-        </div>
+        </form>
+      </div>
       </div>
     </div>
   );
