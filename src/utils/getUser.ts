@@ -11,3 +11,4 @@ export async function loggedInUser() {
   console.log("COOKIES KA DATA = ", data);
   return data;
 }
+
