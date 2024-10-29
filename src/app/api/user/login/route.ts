@@ -14,6 +14,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "User not found" }, { status: 401 });
   }
   const isPasswordMatch = await bcrypt.compare(password, user?.password);
+  
   if (!isPasswordMatch) {
     return NextResponse.json({ error: "Invalid password" }, { status: 401 });
   }

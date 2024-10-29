@@ -5,6 +5,7 @@ const secretKey = "your-secret-key";
 export function generateToken(user) {
   console.log(user);
   const payload = {
+    userName: user.name,
     userId: user._id,
     email: user.email,
   };

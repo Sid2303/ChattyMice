@@ -2,7 +2,7 @@ import mongoose, { Schema, Types } from "mongoose";
 
 export interface Participants {
   name: string;
-  phoneNo: number;
+  phoneNo?: number;
   pid: Types.ObjectId; // single ObjectId for each participant
 }
 
@@ -17,7 +17,7 @@ export interface Conversation {
 // Define a schema for Participants
 const participantSchema = new Schema<Participants>({
   name: { type: String, required: true },
-  phoneNo: { type: Number, required: true },
+  phoneNo: { type: Number, default:1111111111, required: false, },
   pid: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
 });
 

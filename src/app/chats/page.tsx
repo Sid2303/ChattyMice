@@ -1,8 +1,4 @@
-
-
-import React, { useEffect, useState } from "react";
 import "./style.css";
-import selectEmoji from "@/resources/selectEmoji.svg";
 import Sidebar from "@/components/Sidebar/sidebar";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
@@ -10,7 +6,7 @@ import { loggedInUser } from "@/utils/getUser";
 
 const Page =  async () => {
 
-  const userId = await loggedInUser();
+  const user = await loggedInUser();
 
   
   // //Gets all the users that have had a conversation with user
@@ -80,7 +76,7 @@ const Page =  async () => {
 
   return (
     <div className="flex min-h-lvh overflow-hidden">
-      <Sidebar userId={userId.userId}/>
+      <Sidebar userId={user.userId}/>
       <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
         <Profile
           userName={selectedProfile.userName}
