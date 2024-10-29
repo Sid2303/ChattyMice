@@ -1,135 +1,71 @@
-"use client";
+
 
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import selectEmoji from "@/resources/selectEmoji.svg";
-import Sidebar from "@/components/Sidebar/sidebat";
+import Sidebar from "@/components/Sidebar/sidebar";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
 import { loggedInUser } from "@/utils/getUser";
-import getAllConversation from "@/utils/getAllConversations";
 
-const Page = () => {
-  const [user, setUser] = useState<User>();
+const Page =  async () => {
 
-  useEffect(() => {
-    async function data() {
-      const UID = await loggedInUser();
-      setUser(UID);
-    }
-    data();
-  }, []);
+  const userId = await loggedInUser();
 
-  console.log(user);
-  const [currentConversationId, setCurrentConversationId] =
-    useState<string>(""); // set the current selected conversation
-  const allFriends: string[] = [];
-  const id: string = allFriends[0];
-  const allConversation: Array<string> = [];
+  
+  // //Gets all the users that have had a conversation with user
+  // useEffect(() => {
+  //   // console.log(user)
+  //   // getAllConversation(userId)
+  //   // console.log(user?.userId)
 
-  const profiles: {
-    userName: string;
-    phone: number;
-    chat: { sender: "profile" | "user"; message: string }[];
-  }[] = [
-    {
-      userName: "Sid",
-      phone: 8279500601,
-      chat: [
-        { sender: "profile", message: "Hello from Sid!" },
-        { sender: "user", message: "Hi Sid, how are you?" },
-      ],
-    },
-    {
-      userName: "Ranghar",
-      phone: 8279500681,
-      chat: [
-        { sender: "profile", message: "Hello from Ranghar!" },
-        { sender: "user", message: "Hey Ranghar, what’s up?" },
-      ],
-    },
-  ];
+  //   // fetch("/api/user")
+  //   //   .then((res) => res.json())
+  //   //   .then((data) => {
+  //   //     console.log("UserId: ", data.user.userId);
+  //   //   });
 
-  function sendMessage(event: React.FormEvent) {
-    event.preventDefault();
-    if (currentMessage) {
-      selectedProfile.chat.push({
-        sender: "user",
-        message: currentMessage,
-      });
-      setCurrentMessage("");
-    } else {
-      console.log("Please send message");
-    }
-  }
-
-  //Gets all the users that have had a conversation with user
-  useEffect(() => {
-    // getAllConversation(userId)
-    // console.log(userId)
-
-    fetch("/api/user")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("UserId: ", data.user.userId);
-      });
-
-    // fetch('/api/user/conversation')
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     const participants = data.result[0].participants;
-
-    //     // Finds the first other participant who isn't the current user
-    //     const otherParticipant = participants.find((participant:any) => participant !== userId);
-
-    //     // Adds other participant to allFriends if not already present
-    //     if (otherParticipant && !allFriends.includes(otherParticipant)) {
-    //       allFriends.push(otherParticipant);
-    //     }
-
-    //     console.log("All friends:", allFriends);
-    //   })
-  }, []);
+  // }, []);
 
   //Gets all message and logs it(needs to be completed to get messages from selected id)
-  useEffect(() => {
-    fetch("/api/user/conversation")
-      .then((res) => res.json())
-      .then((data) => {
-        data.result.forEach(
-          (
-            conversation: {
-              _id: string;
-              category: string;
-              participants: string;
-            },
-            index: string
-          ) => {}
-        );
+ 
+    //fetching user id close
 
-        // Optionally, if you need to set the first conversation's ID
-        if (data.result.length > 0) {
-          const firstConversationId = data.result[0]._id;
-          console.log("First conversation ID:", firstConversationId);
-          // setCurrentConversationId(firstConversationId);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching messages:", error);
-      });
 
-    fetch("/api/user/conversation/messages")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        const messages = data.result[0];
-        console.log("Single message: ", messages.text);
-      })
-      .catch((error) => {
-        console.error("Error fetching messages:", error);
-      });
-  }, []);
+    // fetch("/api/user/conversation")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     data.result.forEach(
+    //       (
+    //         conversation: {
+    //           _id: string;
+    //           category: string;
+    //           participants: string;
+    //         },
+    //         index: string
+    //       ) => {}
+    //     );
+
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching messages:", error);
+    //   });
+
+  //   fetch("/api/user/conversation/messages")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       const messages = data.result[0];
+  //       // console.log("Single message: ", messages.text);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching messages:", error);
+  //     });
+  //     data();
+  //     console.log("User id: ",user.userId)
+  // }, []);
+  // console.log(user?.userId)
 
   //Getting a username from an id
   // useEffect(() => {
@@ -142,17 +78,9 @@ const Page = () => {
   //     });
   // }, []);
 
-  const [selectedProfile, setSelectedProfile] = useState(profiles[0]);
-  const [currentMessage, setCurrentMessage] = useState<string>("");
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCurrentMessage(e.target.value);
-    console.log(currentMessage);
-  };
-
   return (
     <div className="flex min-h-lvh overflow-hidden">
-      <Sidebar profiles={profiles} setSelectedProfile={setSelectedProfile} />
+      <Sidebar userId={userId.userId}/>
       <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
         <Profile
           userName={selectedProfile.userName}

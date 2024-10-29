@@ -1,13 +1,27 @@
 import mongoose, { Schema, Types } from "mongoose";
 
+export interface Participants {
+  name: string;
+  phoneNo: number;
+  pid: Types.ObjectId; // single ObjectId for each participant
+}
+
 export interface Conversation {
   _id: Types.ObjectId;
   category: "direct" | "group";
-  participants: Types.ObjectId[];
+  participants: Participants[];
   createdAt: Date;
   updatedAt: Date;
 }
 
+// Define a schema for Participants
+const participantSchema = new Schema<Participants>({
+  name: { type: String, required: true },
+  phoneNo: { type: Number, required: true },
+  pid: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+});
+
+// Define the main Conversation schema
 const conversationModel = new Schema<Conversation>({
   category: {
     type: String,
@@ -15,7 +29,7 @@ const conversationModel = new Schema<Conversation>({
     enum: ["direct", "group"],
   },
   participants: {
-    type: [Types.ObjectId],
+    type: [participantSchema], 
     required: true,
   },
   createdAt: {
@@ -27,6 +41,7 @@ const conversationModel = new Schema<Conversation>({
     default: Date.now,
   },
 });
+
 export const Conversation =
   mongoose.models.conversation ||
   mongoose.models.conversations ||
