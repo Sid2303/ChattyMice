@@ -4,11 +4,9 @@ import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
 import { loggedInUser } from "@/utils/getUser";
 
-const Page =  async () => {
-
+const Page = async () => {
   const user = await loggedInUser();
-
-  
+  console.log(user);
   // //Gets all the users that have had a conversation with user
   // useEffect(() => {
   //   // console.log(user)
@@ -24,28 +22,27 @@ const Page =  async () => {
   // }, []);
 
   //Gets all message and logs it(needs to be completed to get messages from selected id)
- 
-    //fetching user id close
 
+  //fetching user id close
 
-    // fetch("/api/user/conversation")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     data.result.forEach(
-    //       (
-    //         conversation: {
-    //           _id: string;
-    //           category: string;
-    //           participants: string;
-    //         },
-    //         index: string
-    //       ) => {}
-    //     );
+  // fetch("/api/user/conversation")
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     data.result.forEach(
+  //       (
+  //         conversation: {
+  //           _id: string;
+  //           category: string;
+  //           participants: string;
+  //         },
+  //         index: string
+  //       ) => {}
+  //     );
 
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching messages:", error);
-    //   });
+  //   })
+  //   .catch((error) => {
+  //     console.error("Error fetching messages:", error);
+  //   });
 
   //   fetch("/api/user/conversation/messages")
   //     .then((res) => {
@@ -76,25 +73,23 @@ const Page =  async () => {
 
   return (
     <div className="flex min-h-lvh overflow-hidden">
-      <Sidebar userId={user.userId}/>
+      <Sidebar userId={user.userId} />
       <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
-        <Profile
-          userName={selectedProfile.userName}
-          phone={selectedProfile.phone}
-        />
-        <Chat profile={selectedProfile} />
+        <Profile user={user.userName} />
+        {/* <Chat profile={selectedProfile} /> */}
         <div className="enter-text flex items-center justify-center overflow-hidden">
           <div className="emoji-selection"></div>
           <form
-            className="input-message ml-3 flex items-center"
-            onSubmit={sendMessage}
+            className="input-message ml-3 flex items-center text-black border border-red-400"
+            action={async () => {
+              "use server";
+              return "";
+            }}
           >
             <input
-              className=""
+              className="w-20 z-10 bg-red-800"
               type="text"
               placeholder="Enter Message: "
-              value={currentMessage}
-              onChange={handleInputChange}
             />
             <div className="send-button-div">
               <button className="btn-2" type="submit">

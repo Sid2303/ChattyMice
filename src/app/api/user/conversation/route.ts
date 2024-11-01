@@ -17,3 +17,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ result: "Unable to get data! " });
   }
 }
+
+export async function GET(req: NextRequest) {
+  await connectToDatabase();
+  const data = await Conversation.find();
+  return NextResponse.json({ from: "Conversation", result: data });
+}

@@ -1,31 +1,38 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import "./sidebar.css";
+import { Conversation, Participants } from "@/libs/models/conversationModel";
 
 const Sidebar = ({ userId }: { userId: string }) => {
-  const allFriends: string[] = [];
+  const [allFriends, setAllFriends] = useState<string[]>([]);
 
-  try {
-    fetch("/api/user/conversation")
-      .then((res) => res.json())
-      .then((data) => {
-        const participants = data.result[0].participants;
+  useEffect(() => {
+    const fetchConversations = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/user/conversation");
+        const data = await res.json();
 
-        // Finds the first other participant who isn't the current user
-        const otherParticipant = participants.find(
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (participant: any) => participant !== userId
+        const participants = data.result.map(
+          (p: Conversation) => p.participants
         );
 
-        // Adds other participant to allFriends if not already present
-        if (otherParticipant && !allFriends.includes(otherParticipant)) {
-          allFriends.push(otherParticipant);
-        }
+        // Using flatMap to flatten and map to get only names of participants
+        const friends = participants.flatMap(
+          (p: Participants[]) =>
+            p
+              .filter((user: Participants) => user.pid + "" !== userId) // Filter out the current user
+              .map((user: Participants) => user.name) // Map to get only the names
+        );
 
-        console.log("All friends:", allFriends);
-      });
-  } catch (error) {
-    console.log("SIDE BAR ERROR = ", error);
-  }
+        setAllFriends(friends);
+      } catch (error) {
+        console.log("SIDE BAR ERROR = ", error);
+      }
+    };
+
+    fetchConversations();
+  }, [userId]);
+
   return (
     <div className="contacts flex flex-col justify-start min-h-lvh">
       <div className="icons flex flex-col">
@@ -34,13 +41,13 @@ const Sidebar = ({ userId }: { userId: string }) => {
         <div className="hamburger"></div>
       </div>
       <div className="profiles">
-        {allFriends.map((profile, index) => (
+        {allFriends.map((name) => (
           <div
-            key={index}
+            key={name}
             className="profile flex flex-col text-white mb-2"
             // onClick={() => setSelectedProfile(profile)} // Handle onClick event
           >
-            <p className="contact-icon">{profile[0]}</p>
+            <p className="contact-icon">{name}</p>
           </div>
         ))}
       </div>
