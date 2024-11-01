@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     return;
   }
   if (publicPath && userToken) {
-    return NextResponse.redirect(new URL("/chats", request.url));
+    return NextResponse.redirect(new URL("/", request.url));
   }
   if (!userToken && !publicPath) {
     return NextResponse.redirect(new URL("/register", request.url));

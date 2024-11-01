@@ -1,19 +1,14 @@
 import "./profile.css";
 import React from "react";
 
-interface ProfileProps {
-    userName: string;
-    phone: number;
-}
-
-const Profile: React.FC<ProfileProps> = ({ userName, phone }) => {
-    return (
-        <div className="chatter-info bg-purple-600 flex w-full justify-center items-center p-4">
-            <div className="flex flex-col">
-                <h1 className="text-white">{userName}</h1>
-            </div>
-        </div>
-    );
+const Profile = ({ user }: { user: string }) => {
+  return (
+    <div className="chatter-info bg-purple-600 flex w-full justify-center items-center p-4">
+      <div className="flex flex-col">
+        <h1 className="text-white">{user ? user : "GUEST"}</h1>
+      </div>
+    </div>
+  );
 };
 
 export default Profile;
