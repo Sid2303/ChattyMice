@@ -3,6 +3,7 @@ import Sidebar from "@/components/Sidebar/sidebar";
 import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
 import { loggedInUser } from "@/utils/getUser";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const Page = async () => {
   const user = await loggedInUser();

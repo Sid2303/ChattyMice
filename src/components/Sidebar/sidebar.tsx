@@ -1,8 +1,10 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import "./sidebar.css";
 import { Conversation, Participants } from "@/libs/models/conversationModel";
-
+import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
+import { AppSidebar } from "../app-sidebar";
 const Sidebar = ({ userId }: { userId: string }) => {
   const [allFriends, setAllFriends] = useState<string[]>([]);
 
@@ -34,24 +36,27 @@ const Sidebar = ({ userId }: { userId: string }) => {
   }, [userId]);
 
   return (
-    <div className="contacts flex flex-col justify-start min-h-lvh">
-      <div className="icons flex flex-col">
-        <div className="hamburger"></div>
-        <div className="hamburger"></div>
-        <div className="hamburger"></div>
-      </div>
-      <div className="profiles">
-        {allFriends.map((name) => (
-          <div
-            key={name}
-            className="profile flex flex-col text-white mb-2"
-            // onClick={() => setSelectedProfile(profile)} // Handle onClick event
-          >
-            <p className="contact-icon">{name}</p>
-          </div>
-        ))}
-      </div>
-    </div>
+    // <div className="contacts flex flex-col justify-start min-h-lvh">
+    //   <div className="icons flex flex-col">
+    //     <div className="hamburger"></div>
+    //     <div className="hamburger"></div>
+    //     <div className="hamburger"></div>
+    //   </div>
+    //   <div className="profiles">
+    //   <Button>Click me</Button>
+    //     {allFriends.map((name) => (
+    //       <div
+    //         key={name}
+    //         className="profile flex flex-col text-white mb-2"
+    //         // onClick={() => setSelectedProfile(profile)} // Handle onClick event
+    //       >
+    //         <p className="contact-icon">{name}</p>
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
+    <>
+    </>
   );
 };
 

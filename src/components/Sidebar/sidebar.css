@@ -4,18 +4,9 @@
 }
 
 
-.trianle-div{
-    clip-path: polygon(100% 51%, 0 32%, 0 67%);
-    height: 35%;
-    width: 6rem;
-    background-color: #7A67B6;
-    left: 6.3rem;
-}
-
 .contacts{
-    width: 5rem;
+    width: 15rem;
     background-color: #7A67B6;
-    z-index: 10;
     position: fixed;
 }
 
@@ -38,7 +29,7 @@
     text-align: center;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 5rem;
     aspect-ratio: 1 / 1;
     background-color: #C9BCF2;
     border-radius: 50%;

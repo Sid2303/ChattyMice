@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Logout from "@/components/Logout";
 import { cookies } from "next/headers";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,8 +19,14 @@ export default function RootLayout({
   console.log(isLoggedIn);
   return (
     <html lang="en">
-      <body>
-        {children} {isLoggedIn && <Logout />}
+      <body className="dark">
+        <SidebarProvider>
+        <AppSidebar />
+          <main>
+            <SidebarTrigger />
+          {children} {isLoggedIn && <Logout />}
+          </main>
+        </SidebarProvider>
       </body>
     </html>
   );
