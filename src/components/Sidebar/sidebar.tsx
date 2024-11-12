@@ -4,29 +4,36 @@ import React, { useEffect, useState } from "react";
 import "./sidebar.css";
 import { Conversation, Participants } from "@/libs/models/conversationModel";
 import { SidebarProvider, SidebarTrigger } from "../ui/sidebar";
+import { Button } from "../ui/button";
 import { AppSidebar } from "../app-sidebar";
+
 const Sidebar = ({ userId }: { userId: string }) => {
-  const [allFriends, setAllFriends] = useState<string[]>([]);
+  const [allFriends, setAllFriends] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Add loading state
+
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
+        var friends: any[] = [];
+        const uid = "67216a2f7ce05c0aca56905d";
         const res = await fetch("http://localhost:3000/api/user/conversation");
         const data = await res.json();
-
-        const participants = data.result.map(
-          (p: Conversation) => p.participants
-        );
-
-        // Using flatMap to flatten and map to get only names of participants
-        const friends = participants.flatMap(
-          (p: Participants[]) =>
-            p
-              .filter((user: Participants) => user.pid + "" !== userId) // Filter out the current user
-              .map((user: Participants) => user.name) // Map to get only the names
-        );
-
-        setAllFriends(friends);
+        const result = data.result;
+        
+        result.forEach((element: { participants: any; }) => {
+          const participants = element.participants;
+          
+          // Corrected the loop condition to `i < participants.length`
+          for (let i = 0; i < participants.length; i++) {
+            if (participants[i].pid === uid) {
+              // Add other participants (excluding the user) to the `friends` array
+              friends.push(participants.filter((item: any) => item !== participants[i]));
+            }
+          }
+        });
+        
+        setAllFriends(friends)
       } catch (error) {
         console.log("SIDE BAR ERROR = ", error);
       }
@@ -35,28 +42,15 @@ const Sidebar = ({ userId }: { userId: string }) => {
     fetchConversations();
   }, [userId]);
 
+  useEffect(() => {
+    console.log("Updated friends list:", allFriends);
+  }, [allFriends]); // Log when `allFriends` changes
+
   return (
-    // <div className="contacts flex flex-col justify-start min-h-lvh">
-    //   <div className="icons flex flex-col">
-    //     <div className="hamburger"></div>
-    //     <div className="hamburger"></div>
-    //     <div className="hamburger"></div>
-    //   </div>
-    //   <div className="profiles">
-    //   <Button>Click me</Button>
-    //     {allFriends.map((name) => (
-    //       <div
-    //         key={name}
-    //         className="profile flex flex-col text-white mb-2"
-    //         // onClick={() => setSelectedProfile(profile)} // Handle onClick event
-    //       >
-    //         <p className="contact-icon">{name}</p>
-    //       </div>
-    //     ))}
-    //   </div>
-    // </div>
-    <>
-    </>
+    <SidebarProvider>
+        <AppSidebar />
+            <SidebarTrigger />
+        </SidebarProvider>
   );
 };
 

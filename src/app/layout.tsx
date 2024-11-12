@@ -20,13 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="dark">
-        <SidebarProvider>
-        <AppSidebar />
           <main>
-            <SidebarTrigger />
           {children} {isLoggedIn && <Logout />}
           </main>
-        </SidebarProvider>
       </body>
     </html>
   );
