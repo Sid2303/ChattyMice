@@ -15,30 +15,29 @@ const Sidebar = ({ userId }: { userId: string }) => {
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        var friends: any[] = [];
-        const uid = "67216a2f7ce05c0aca56905d";
+        const friends: any[] = [];
         const res = await fetch("http://localhost:3000/api/user/conversation");
         const data = await res.json();
         const result = data.result;
-        
-        result.forEach((element: { participants: any; }) => {
+  
+        result.forEach((element: { participants: any }) => {
           const participants = element.participants;
-          
-          // Corrected the loop condition to `i < participants.length`
           for (let i = 0; i < participants.length; i++) {
-            if (participants[i].pid === uid) {
-              // Add other participants (excluding the user) to the `friends` array
-              friends.push(participants.filter((item: any) => item !== participants[i]));
+            if (participants[i].pid === userId) {
+              // Add each friend directly to the `friends` array without nesting
+              participants
+                .filter((item: any) => item.pid !== userId)
+                .forEach((friend: any) => friends.push(friend));
             }
           }
         });
-        
-        setAllFriends(friends)
+  
+        setAllFriends(friends);
       } catch (error) {
         console.log("SIDE BAR ERROR = ", error);
       }
     };
-
+  
     fetchConversations();
   }, [userId]);
 
@@ -48,7 +47,7 @@ const Sidebar = ({ userId }: { userId: string }) => {
 
   return (
     <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar friends={allFriends} />
             <SidebarTrigger />
         </SidebarProvider>
   );
