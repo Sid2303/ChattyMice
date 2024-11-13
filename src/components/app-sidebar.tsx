@@ -20,7 +20,7 @@ import {
         <Sidebar variant="sidebar">
             <SidebarContent>
             <SidebarGroup>
-                <SidebarGroupLabel>Friends</SidebarGroupLabel>
+                <SidebarGroupLabel className="text-xl mb-4">Friends</SidebarGroupLabel>
                 <SidebarGroupContent>
                 <SidebarMenu>
                     {friends.map((friend, index) => (

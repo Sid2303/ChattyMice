@@ -81,14 +81,14 @@ const Page = async () => {
         <div className="enter-text flex items-center justify-center overflow-hidden">
           <div className="emoji-selection"></div>
           <form
-            className="input-message ml-3 flex items-center text-black border border-red-400"
+            className="input-message ml-3 flex items-center text-black"
             action={async () => {
               "use server";
               return "";
             }}
           >
             <input
-              className="w-20 z-10 bg-red-800"
+              className="w-20 z-10"
               type="text"
               placeholder="Enter Message: "
             />
