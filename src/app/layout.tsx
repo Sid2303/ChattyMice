@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Logout from "@/components/Logout";
 import { cookies } from "next/headers";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,13 +12,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const isLoggedIn = cookies().has("token");
-  console.log(isLoggedIn);
+  
   return (
     <html lang="en">
       <body className="dark">
           <main>
-          {children} {isLoggedIn && <Logout />}
+          {children} 
           </main>
       </body>
     </html>
