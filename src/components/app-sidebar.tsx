@@ -13,10 +13,16 @@ import { Button } from "./ui/button";
 import { useRouter } from "next/navigation";
 
 type AppSidebarProps = {
-  friends: { name: string; phoneNo: string; pid: string; _id: string }[]; // Adjust to match friend object structure
+  friends: { name: string; phoneNo: string; pid: string; _id: string }[];
+  selectedUser: string | null; // Add a prop for the selected user
+  onUserSelect: (user: string) => void; // Add a callback prop for selection
 };
 
-export function AppSidebar({ friends }: AppSidebarProps) {
+export function AppSidebar({
+  friends,
+  selectedUser,
+  onUserSelect,
+}: AppSidebarProps) {
   const router = useRouter();
   const handleLogout = async () => {
     try {
@@ -40,15 +46,22 @@ export function AppSidebar({ friends }: AppSidebarProps) {
     <Sidebar variant="sidebar">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xl mb-4">
-            Friends
-          </SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl mb-4">Friends</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {friends.map((friend, index) => (
                 <SidebarMenuItem key={index}>
                   <SidebarMenuButton asChild>
-                    <h2>{friend.name}</h2>
+                    <h2
+                      className={`cursor-pointer ${
+                        selectedUser === friend.name
+                          ? "text-blue-500 font-bold" // Highlight selected user
+                          : ""
+                      }`}
+                      onClick={() => onUserSelect(friend._id)} // Set selected user
+                    >
+                      {friend.name}
+                    </h2>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

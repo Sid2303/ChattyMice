@@ -4,79 +4,18 @@ import Profile from "@/components/Profile/profile";
 import Chat from "@/components/Chat/chat";
 import { loggedInUser } from "@/utils/getUser";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useState } from "react";
 
 const Page = async () => {
   const user = await loggedInUser();
   console.log(user);
-  // //Gets all the users that have had a conversation with user
-  // useEffect(() => {
-  //   // console.log(user)
-  //   // getAllConversation(userId)
-  //   // console.log(user?.userId)
-
-  //   // fetch("/api/user")
-  //   //   .then((res) => res.json())
-  //   //   .then((data) => {
-  //   //     console.log("UserId: ", data.user.userId);
-  //   //   });
-
-  // }, []);
-
-  //Gets all message and logs it(needs to be completed to get messages from selected id)
-
-  //fetching user id close
-
-  // fetch("/api/user/conversation")
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     data.result.forEach(
-  //       (
-  //         conversation: {
-  //           _id: string;
-  //           category: string;
-  //           participants: string;
-  //         },
-  //         index: string
-  //       ) => {}
-  //     );
-
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error fetching messages:", error);
-  //   });
-
-  //   fetch("/api/user/conversation/messages")
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((data) => {
-  //       const messages = data.result[0];
-  //       // console.log("Single message: ", messages.text);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching messages:", error);
-  //     });
-  //     data();
-  //     console.log("User id: ",user.userId)
-  // }, []);
-  // console.log(user?.userId)
-
-  //Getting a username from an id
-  // useEffect(() => {
-  //   fetch(`/api/user/${id}`)
-  //     .then((res) => {
-  //       return res.json;
-  //     })
-  //     .then((data) => {
-  //       // console.log(data)
-  //     });
-  // }, []);
+  let selectedUser = "";
 
   return (
     <div className="flex min-h-lvh overflow-hidden">
       <Sidebar userId={user.userId} />
       <div className="chat-section min-h-lvh flex flex-col justify-between items-center">
-        <Profile user={user.userName} />
+        <Profile selectedUser={selectedUser} />
         {/* <Chat profile={selectedProfile} /> */}
         <div className="enter-text flex items-center justify-center overflow-hidden">
           <div className="emoji-selection"></div>
