@@ -25,14 +25,15 @@ input{
   margin-top: .2rem;
   font-size: larger;
   background-color: #8d86c9;
+  font-weight: 500;
 }
 
 .input-message input{
     color: white;
     width: 85%;
     height: 3.5rem;
-    padding: 1rem;
-    border-radius: 17px;
+    padding: 1.5rem;
+    border-radius: 25px;
     background-color: #b0a8f9;
 }
 
